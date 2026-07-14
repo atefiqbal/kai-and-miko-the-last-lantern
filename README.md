@@ -20,5 +20,3 @@ This single-page site contains everything: the film (four cuts — narrated+capt
 Tools: GPT Image 2 · Seedance 2.0 · Seed Audio (TTS) · HyperFrames · ffmpeg.
 
 Made for the $100 weekly animation challenge — "Kai &amp; Miko, An Animated Short."
-
-_Site pattern adapted from github.com/thariqs/html-effectiveness._
