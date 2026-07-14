@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Last Lantern — Kai &amp; Miko | An Animated Short</title>
+<meta name="description" content="A 45-second AI-produced animated short. A boy, a fox, and the village's last dark beacon. Storyboard-first pipeline: reference sheets → GPT Image 2 keyframes → Seedance 2.0 → edit, sound, voiceover.">
+<meta property="og:title" content="The Last Lantern — Kai &amp; Miko">
+<meta property="og:description" content="A wordless 45-second animated short about misread intentions and belonging, above the clouds. Watch the film + see the full storyboard, keyframes, and prompts.">
+<meta property="og:type" content="video.other">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --bg:#0c0e13; --bg2:#10131a; --panel:#161a23; --panel2:#1b1f2a;
+  --ink:#eef1f5; --mut:#93a0b0; --dim:#6b7686;
+  --amber:#e9b24a; --amber-d:#c9963a; --slate:#7f9ec0; --line:#262b36;
+  --good:#6fbf8b;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--amber);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:40;background:rgba(12,14,19,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:8px;height:56px}
+nav .brand{font-family:var(--serif);font-weight:700;letter-spacing:.02em;margin-right:auto;font-size:16px}
+nav .brand b{color:var(--amber)}
+nav a.nl{color:var(--mut);font-size:13px;padding:6px 9px;border-radius:7px}
+nav a.nl:hover{color:var(--ink);background:var(--panel);text-decoration:none}
+@media(max-width:820px){nav a.nl{display:none}}
+
+/* hero */
+.hero{position:relative;padding:54px 0 30px;text-align:center;background:
+  radial-gradient(1200px 500px at 50% -10%, rgba(233,178,74,.10), transparent 60%),
+  linear-gradient(180deg,#0c0e13,#0e1119)}
+.kick{letter-spacing:.36em;text-transform:uppercase;color:var(--amber);font-size:12px;margin-bottom:12px}
+h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(40px,7vw,86px);line-height:1.02;letter-spacing:.01em}
+h1.title .amb{color:var(--amber)}
+.logline{color:var(--mut);max-width:680px;margin:16px auto 0;font-size:clamp(15px,2vw,18px)}
+.facts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:22px 0 4px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:12.5px;color:var(--mut)}
+.chip b{color:var(--ink)}
+
+/* player */
+.player{margin:26px 0 8px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#000;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+.player video{width:100%;display:block;aspect-ratio:16/9;background:#000}
+.vtabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0 2px}
+.vtab{background:var(--panel);border:1px solid var(--line);color:var(--mut);border-radius:10px;padding:9px 14px;font-size:13px;cursor:pointer;font-family:inherit;transition:.15s}
+.vtab:hover{color:var(--ink)}
+.vtab.on{background:var(--amber);color:#141007;border-color:var(--amber);font-weight:600}
+.vtab small{display:block;font-size:10.5px;opacity:.8;font-weight:400}
+.vnote{text-align:center;color:var(--dim);font-size:12px;margin-top:8px}
+
+/* sections */
+section{padding:56px 0;border-top:1px solid var(--line)}
+.eyebrow{letter-spacing:.28em;text-transform:uppercase;color:var(--amber);font-size:11px;margin-bottom:10px}
+h2{font-family:var(--serif);font-weight:700;font-size:clamp(26px,3.6vw,38px);line-height:1.1;margin-bottom:8px}
+.lead{color:var(--mut);max-width:720px;font-size:16px;margin-bottom:26px}
+p.body{color:#d7dde5;margin-bottom:14px;max-width:760px}
+h3{font-family:var(--serif);font-size:20px;margin:0 0 6px}
+
+/* story movements */
+.moves{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.moves{grid-template-columns:1fr}}
+.move{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;border-top:3px solid var(--seq)}
+.move .t{font-variant-numeric:tabular-nums;color:var(--mut);font-size:12px;font-family:var(--mono)}
+.move h3{margin:6px 0}
+.move p{color:#cfd6de;font-size:14px}
+
+/* characters */
+.chars{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.chars{grid-template-columns:1fr}}
+.char{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.char img{width:100%;border-bottom:1px solid var(--line)}
+.char .cx{padding:18px 20px}
+.char h3{color:var(--amber)}
+.char .role{font-family:var(--mono);font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.char p{color:#cfd6de;font-size:14.5px}
+.swatches{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.sw{width:22px;height:22px;border-radius:5px;border:1px solid rgba(255,255,255,.15)}
+
+/* world sheets */
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:18px}
+.sheet img{width:100%}
+.sheet .cap{padding:12px 18px;color:var(--mut);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sheet .cap b{color:var(--ink)}
+
+/* storyboard grid */
+.sbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:820px){.sbgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.sbgrid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;transition:.15s}
+.panel:hover{border-color:var(--amber);transform:translateY(-2px)}
+.panel .thumb{position:relative;aspect-ratio:16/9;background:#000}
+.panel .thumb img{width:100%;height:100%;object-fit:cover}
+.panel .pn{position:absolute;top:7px;left:7px;background:rgba(0,0,0,.72);color:var(--amber);font-weight:700;font-size:12px;padding:2px 7px;border-radius:5px;font-family:var(--mono)}
+.panel .tc{position:absolute;top:7px;right:7px;background:rgba(0,0,0,.72);color:#dfe6ee;font-size:10.5px;padding:2px 7px;border-radius:5px;font-family:var(--mono)}
+.panel .px{padding:11px 13px}
+.panel .px h4{font-size:13.5px;margin-bottom:5px}
+.panel .px .meta{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.panel .tag{font-size:10px;padding:1px 7px;border-radius:12px;border:1px solid var(--line);color:var(--slate)}
+.panel .tag.cam{background:var(--amber);color:#141007;border-color:var(--amber)}
+.panel .px p{font-size:12px;color:var(--mut)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(4,5,8,.94);z-index:90;display:none;align-items:center;justify-content:center;padding:24px}
+.lb.on{display:flex}
+.lb img{max-width:96vw;max-height:88vh;border-radius:8px;border:1px solid var(--line)}
+.lb .cap{position:absolute;bottom:20px;left:0;right:0;text-align:center;color:var(--mut);font-size:13px}
+.lb .x{position:absolute;top:18px;right:22px;color:var(--ink);font-size:28px;cursor:pointer;line-height:1}
+
+/* pipeline svg */
+.diagram{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;overflow-x:auto}
+.diagram svg{display:block;min-width:760px;margin:0 auto}
+
+/* voice */
+.voscript{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px 6px}
+.voline{display:grid;grid-template-columns:88px 1fr;gap:14px;padding:12px 16px;border-bottom:1px solid var(--line);align-items:baseline}
+.voline:last-child{border-bottom:0}
+.voline .tc{font-family:var(--mono);font-size:12px;color:var(--amber)}
+.voline .ln{font-family:var(--serif);font-size:17px;color:#e7ecf2}
+
+/* prompts */
+.prompt{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.prompt summary{cursor:pointer;list-style:none;padding:14px 18px;display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px}
+.prompt summary::-webkit-details-marker{display:none}
+.prompt summary .tw{font-family:var(--mono);font-size:11px;color:var(--dim);margin-left:auto}
+.prompt summary .caret{color:var(--amber);transition:.2s}
+.prompt[open] summary .caret{transform:rotate(90deg)}
+.pbody{border-top:1px solid var(--line);position:relative}
+.pbody pre{margin:0;padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.6;color:#cbd3dc;white-space:pre-wrap;word-break:break-word}
+.copy{position:absolute;top:10px;right:10px;background:var(--panel2);border:1px solid var(--line);color:var(--mut);border-radius:7px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--ink);border-color:var(--amber)}
+.copy.done{color:var(--good);border-color:var(--good)}
+
+/* workflow / stat strip */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+@media(max-width:640px){.strip{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.stat .n{font-family:var(--serif);font-size:30px;color:var(--amber);line-height:1}
+.stat .l{color:var(--mut);font-size:12px;margin-top:5px}
+.steps{list-style:none;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:12px 0 12px 44px;border-bottom:1px solid var(--line);color:#d7dde5;font-size:14.5px}
+.steps li:last-child{border-bottom:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:11px;width:28px;height:28px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);color:var(--amber);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700}
+.steps li b{color:var(--ink)}
+.changes{margin-top:18px}
+.chg{border-left:3px solid var(--slate);background:var(--panel);border-radius:0 10px 10px 0;padding:11px 16px;margin:9px 0;font-size:13.5px;color:#cfd6de}
+.chg b{color:var(--amber)}
+
+/* downloads */
+.dls{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.dl{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 15px;font-size:13px;color:var(--ink);display:flex;gap:8px;align-items:center}
+.dl:hover{border-color:var(--amber);text-decoration:none}
+.dl .k{font-family:var(--mono);font-size:11px;color:var(--dim)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--dim);font-size:13px;text-align:center}
+footer a{color:var(--mut)}
+.tools{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.tool{font-family:var(--mono);font-size:11px;color:var(--mut);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="brand">THE LAST <b>LANTERN</b></div>
+  <a class="nl" href="#film">Film</a>
+  <a class="nl" href="#story">Story</a>
+  <a class="nl" href="#characters">Characters</a>
+  <a class="nl" href="#world">World</a>
+  <a class="nl" href="#storyboard">Storyboard</a>
+  <a class="nl" href="#voice">Voice</a>
+  <a class="nl" href="#pipeline">Pipeline</a>
+  <a class="nl" href="#prompts">Prompts</a>
+</div></nav>
+
+<header class="hero" id="film"><div class="wrap">
+  <div class="kick">Kai &amp; Miko · An Animated Short</div>
+  <h1 class="title">THE LAST <span class="amb">LANTERN</span></h1>
+  <p class="logline">Above the clouds, a boy chases a fox for a stolen ember — and finds a friend trying to bring the light home. A wordless 45-second short about misread intentions and belonging.</p>
+  <div class="facts">
+    <span class="chip"><b>45s</b> runtime</span>
+    <span class="chip"><b>1080p</b> · 16:9</span>
+    <span class="chip"><b>3×15s</b> Seedance</span>
+    <span class="chip"><b>12</b> keyframes</span>
+    <span class="chip">storyboard-first</span>
+  </div>
+
+  <div class="player">
+    <video id="film-video" controls playsinline preload="metadata" poster="assets/img/poster.jpg">
+      <source id="film-src" src="assets/video/film_hyperframes.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="vtabs" id="vtabs">
+    <button class="vtab on" data-src="assets/video/film_hyperframes.mp4">Narrated + Captions<small>title &amp; script overlay</small></button>
+    <button class="vtab" data-src="assets/video/film_captions.mp4">Narrated (alt)<small>scrim captions</small></button>
+    <button class="vtab" data-src="assets/video/film_diegetic.mp4">Wordless<small>diegetic sound only</small></button>
+    <button class="vtab" data-src="assets/video/film_scored.mp4">Wordless + Score<small>subtle warm pad</small></button>
+  </div>
+  <p class="vnote">Four cuts, one film. The narrated version leads; the wordless cut is how the story was designed to read.</p>
+</div></header>
+
+<section id="story"><div class="wrap">
+  <div class="eyebrow">The Story</div>
+  <h2>A theft that wasn't.</h2>
+  <p class="lead">Told in three fifteen-second movements, with no dialogue — the picture and the sound carry it.</p>
+  <p class="body">In a wind-swept village built on rooftops above a sea of cloud, every lantern glows at dusk — every one but a single dark beacon at the edge of the sky. Kai kneels on a maintenance platform with a glowing ember capsule in his bag. Miko, a small fox, watches it a beat too long — then snatches it and runs.</p>
+  <p class="body">Kai gives chase across slate roofs and a swaying bridge, certain he's been robbed. But at the far tower the fox isn't hiding the ember — he's pawing at a dead mechanism, trying to reach what he cannot fix alone. The boy arrives angry, and then he understands. Not a thief. A keeper of the light.</p>
+  <p class="body">They work it together: Kai's hands, Miko's paw on a hidden latch, one ember between them. The beacon catches, and warmth spreads tower to tower until the whole village remembers how to glow. Then the two of them sit at the edge of the platform and watch it — home, at last.</p>
+  <div class="moves" style="margin-top:26px">
+    <div class="move" style="--seq:#c99a5b"><div class="t">0:00 – 0:15</div><h3>The Theft</h3><p>The world, the ember, and a fox who runs the moment no one expects it.</p></div>
+    <div class="move" style="--seq:#7fa0b6"><div class="t">0:15 – 0:30</div><h3>The Revelation</h3><p>A dead beacon, a boy's anger, and the quiet turn from misunderstanding to teamwork.</p></div>
+    <div class="move" style="--seq:#d8a24a"><div class="t">0:30 – 0:45</div><h3>The Light</h3><p>One spark, a hidden latch, and a village waking tower by tower into the dark.</p></div>
+  </div>
+</div></section>
+
+<section id="characters"><div class="wrap">
+  <div class="eyebrow">Cast</div>
+  <h2>A boy and a fox.</h2>
+  <p class="lead">Two characters were given; the world and the story were built around them. Their designs never change across a single frame of the film.</p>
+  <div class="chars">
+    <div class="char">
+      <img src="assets/img/kai_sheet.jpg" alt="Kai character sheet">
+      <div class="cx">
+        <div class="role">Protagonist · ~10 years</div>
+        <h3>Kai</h3>
+        <p>Energetic, curious, kind-hearted. He carries the ember and the reach — the strength to work the crank and the openness to change his mind. His anger lasts exactly as long as it takes to understand.</p>
+        <div class="swatches">
+          <span class="sw" style="background:#d24e26" title="hair"></span>
+          <span class="sw" style="background:#e8a13c" title="eyes"></span>
+          <span class="sw" style="background:#eee6da" title="shirt"></span>
+          <span class="sw" style="background:#9aae95" title="scarf"></span>
+          <span class="sw" style="background:#c46a34" title="backpack"></span>
+        </div>
+      </div>
+    </div>
+    <div class="char">
+      <img src="assets/img/miko_sheet.jpg" alt="Miko character sheet">
+      <div class="cx">
+        <div class="role">Companion · small fox</div>
+        <h3>Miko</h3>
+        <p>Clever, quick, affectionate — and wordless. He sees the failing beacon before anyone else and can't explain it, so he acts. Speed and perception where Kai has reach and strength; neither relights the light alone.</p>
+        <div class="swatches">
+          <span class="sw" style="background:#e8933f" title="fur"></span>
+          <span class="sw" style="background:#f2e7cf" title="cream"></span>
+          <span class="sw" style="background:#8a5a3a" title="paws"></span>
+          <span class="sw" style="background:#e8a13c" title="eyes"></span>
+          <span class="sw" style="background:#e6a2a0" title="inner ear"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section id="world"><div class="wrap">
+  <div class="eyebrow">World-building</div>
+  <h2>The Cloud-Top Village.</h2>
+  <p class="lead">Before a single shot, two reference sheets locked the place and the prop — so every keyframe and every second of animation inherits the same architecture, materials, and light.</p>
+  <div class="sheet">
+    <img src="assets/img/env_sheet.jpg" alt="Cloud-Top Village environment sheet">
+    <div class="cap"><b>Environment Sheet — Cloud-Top Village</b><span>aerial · roof lane · bridge · beacon platform · skyline · route map + materials + palette</span></div>
+  </div>
+  <p class="body">A wind-swept alpine settlement of steep slate roofs, half-timbered facades, copper-and-glass lantern towers and suspended timber bridges, floating above dense fog at blue hour. The palette holds cool slate-blue and sage, with amber reserved as a narrative accent — the colour of the ember, the characters, and the light they restore. One beacon stays dark in every shot until the very end.</p>
+  <div class="sheet">
+    <img src="assets/img/object_sheet.jpg" alt="The Last Lantern beacon object sheet">
+    <div class="cap"><b>Object Sheet — The Last Lantern</b><span>turnaround · mechanism states · ember capsule · crank · hidden latch · power-flow</span></div>
+  </div>
+  <p class="body">The beacon is both machine and metaphor: a weathered copper housing with a glass lantern chamber, a hand crank Kai can turn, and a hidden latch beneath that only a small paw can reach. Dark while the characters misunderstand each other; radiant once they cooperate. Its mechanics were designed first so the repair reads clearly on screen — insert the ember, free the latch, turn the crank, and the light returns.</p>
+</div></section>
+
+<section id="storyboard"><div class="wrap">
+  <div class="eyebrow">Storyboard → Screen</div>
+  <h2>Twelve shots, planned before a credit was spent.</h2>
+  <p class="lead">Each panel is an approved GPT Image 2 keyframe — composed, audited for continuity, then used as the start frame for animation. Click any panel to enlarge.</p>
+  <div class="sbgrid" id="sbgrid"></div>
+</div></section>
+
+<section id="voice"><div class="wrap">
+  <div class="eyebrow">Voiceover &amp; Script</div>
+  <h2>Six lines. The rest is silence.</h2>
+  <p class="lead">The film was built wordless, then a spare narrator was added — read by a warm storyteller voice, with the diegetic sound design ducked gently underneath. The chase stays silent on purpose.</p>
+  <div class="voscript">
+    <div class="voline"><span class="tc">0:00</span><span class="ln">"Every night, the village lights itself."</span></div>
+    <div class="voline"><span class="tc">0:04</span><span class="ln">"But one tower had gone dark."</span></div>
+    <div class="voline"><span class="tc">0:15</span><span class="ln">"The fox knew what the boy did not."</span></div>
+    <div class="voline"><span class="tc">0:22</span><span class="ln">"Not a thief — a keeper of the light."</span></div>
+    <div class="voline"><span class="tc">0:31</span><span class="ln">"Small hands. Small paws. One flame."</span></div>
+    <div class="voline"><span class="tc">0:40</span><span class="ln">"The village remembered its glow — and the two friends, each other."</span></div>
+  </div>
+</div></section>
+
+<section id="pipeline"><div class="wrap">
+  <div class="eyebrow">How it was made</div>
+  <h2>The pipeline.</h2>
+  <p class="lead">Storyboard-first: lock identity and geography before animation, so nothing drifts. Reference sheets feed keyframes; keyframes feed video; video is edited, scored, and voiced.</p>
+  <div class="diagram">
+    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Production pipeline diagram">
+      <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#e9b24a"/></marker>
+        <style>.bx{fill:#1b1f2a;stroke:#2b3240}.lbl{fill:#eef1f5;font-family:var(--sans);font-size:13px;font-weight:600}.sub{fill:#93a0b0;font-family:var(--sans);font-size:10.5px}.ph{fill:#e9b24a;font-family:var(--mono);font-size:10px}</style>
+      </defs>
+      <line x1="60" y1="70" x2="840" y2="70" stroke="#2b3240" stroke-width="1"/>
+      <!-- 1 -->
+      <rect class="bx" x="20" y="40" width="120" height="60" rx="10"/>
+      <text class="ph" x="32" y="58">01–02</text><text class="lbl" x="32" y="76">Character sheets</text><text class="sub" x="32" y="91">Kai · Miko (given)</text>
+      <line x1="140" y1="70" x2="176" y2="70" stroke="#e9b24a" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- 2 -->
+      <rect class="bx" x="180" y="40" width="130" height="60" rx="10"/>
+      <text class="ph" x="192" y="58">03–04</text><text class="lbl" x="192" y="76">Reference sheets</text><text class="sub" x="192" y="91">environment · beacon</text>
+      <line x1="310" y1="70" x2="346" y2="70" stroke="#e9b24a" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- 3 -->
+      <rect class="bx" x="350" y="40" width="150" height="60" rx="10"/>
+      <text class="ph" x="362" y="58">GPT Image 2</text><text class="lbl" x="362" y="76">12 keyframes · 2K</text><text class="sub" x="362" y="91">ref-locked, audited</text>
+      <line x1="500" y1="70" x2="536" y2="70" stroke="#e9b24a" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- 4 -->
+      <rect class="bx" x="540" y="40" width="150" height="60" rx="10"/>
+      <text class="ph" x="552" y="58">Seedance 2.0</text><text class="lbl" x="552" y="76">3 × 15s multishot</text><text class="sub" x="552" y="91">diegetic audio</text>
+      <line x1="690" y1="70" x2="726" y2="70" stroke="#e9b24a" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- 5 -->
+      <rect class="bx" x="730" y="40" width="150" height="60" rx="10"/>
+      <text class="ph" x="742" y="58">Editorial</text><text class="lbl" x="742" y="76">edit · sound · VO</text><text class="sub" x="742" y="91">captions · title</text>
+      <!-- gate row -->
+      <text class="sub" x="20" y="150" style="font-size:12px;fill:#7f9ec0">Continuity gate at every stage → audited against locked IDs before the next step.</text>
+      <rect x="20" y="165" width="860" height="56" rx="10" fill="#12151c" stroke="#2b3240"/>
+      <text class="ph" x="34" y="186">INVARIANTS</text>
+      <text class="sub" x="34" y="205" style="font-size:11.5px">Kai &amp; Miko on-model · one village, continuous · pursuit travels left→right · beacon stays dark until Shot 11 · one ember capsule</text>
+    </svg>
+  </div>
+</div></section>
+
+<section id="prompts"><div class="wrap">
+  <div class="eyebrow">Prompt Archive</div>
+  <h2>Every prompt, open.</h2>
+  <p class="lead">The actual prompts behind the sheets, the keyframes, and the animation — copy any of them. This is the part that makes the film reproducible.</p>
+  <div id="prompts-list"></div>
+</div></section>
+
+<section id="workflow"><div class="wrap">
+  <div class="eyebrow">Process &amp; Numbers</div>
+  <h2>What it took.</h2>
+  <div class="strip">
+    <div class="stat"><div class="n">12</div><div class="l">keyframes approved</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">Seedance sequences</div></div>
+    <div class="stat"><div class="n">6</div><div class="l">narration lines</div></div>
+    <div class="stat"><div class="n">~774</div><div class="l">credits, full film</div></div>
+  </div>
+  <ol class="steps">
+    <li>Locked the story around a single readable conflict before touching an image: <b>a "theft" that turns out to be a rescue.</b></li>
+    <li>Built an <b>environment sheet</b> (6 views) and a <b>beacon object sheet</b> (turnaround + mechanism states) so geography and prop logic were fixed first.</li>
+    <li>Generated <b>12 keyframes in GPT Image 2</b> at 2K, each referencing the four locked sheets; approved one frame per panel against a continuity gate.</li>
+    <li>Animated <b>three 15-second Seedance 2.0 multishot clips</b> from those keyframes, diegetic sound only, each starting from its approved keyframe.</li>
+    <li>Edited the three clips, verified the joins, then added a <b>spare narrator voiceover and on-screen script</b>; a HyperFrames composition rendered the captioned master.</li>
+  </ol>
+  <div class="changes">
+    <div class="chg"><b>More chase → one clear beacon-problem shot.</b> The audience must grasp Miko's intent the instant he reaches the tower, so a still "problem" beat earns its place over extra running.</div>
+    <div class="chg"><b>Bigger finale → a quiet ending.</b> The ignition is the visual climax; the last image releases tension rather than competing with it.</div>
+    <div class="chg"><b>Character sheets as env-sheet refs → text-only sheets.</b> Feeding the character art as image references bled the characters into the environment sheet; describing the style in words kept the sheets character-free.</div>
+    <div class="chg"><b>Wordless first, words few.</b> The film was designed to read with no dialogue; the narrator was added last and kept to six lines so silence still carries the chase.</div>
+  </div>
+</div></section>
+
+<section id="get"><div class="wrap">
+  <div class="eyebrow">Downloads</div>
+  <h2>Take it with you.</h2>
+  <p class="lead">The full-quality masters and reference sheets.</p>
+  <div class="dls">
+    <a class="dl" href="assets/video/film_hyperframes.mp4" download>▸ Film — Narrated + Captions <span class="k">mp4</span></a>
+    <a class="dl" href="assets/video/film_diegetic.mp4" download>▸ Film — Wordless <span class="k">mp4</span></a>
+    <a class="dl" href="assets/img/env_sheet.jpg" download>▸ Environment sheet <span class="k">jpg</span></a>
+    <a class="dl" href="assets/img/object_sheet.jpg" download>▸ Beacon object sheet <span class="k">jpg</span></a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div style="font-family:var(--serif);font-size:18px;color:var(--ink);margin-bottom:6px">The Last Lantern</div>
+  <div class="tools">
+    <span class="tool">GPT Image 2</span><span class="tool">Seedance 2.0</span><span class="tool">Seed Audio (TTS)</span><span class="tool">HyperFrames</span><span class="tool">ffmpeg</span>
+  </div>
+  <p>Kai &amp; Miko · a 45-second animated short · storyboard-first AI pipeline.</p>
+  <p style="margin-top:8px;color:var(--dim)">Site pattern adapted from github.com/thariqs/html-effectiveness</p>
+</div></footer>
+
+<div class="lb" id="lb"><span class="x" id="lbx">&times;</span><img id="lbimg" src="" alt=""><div class="cap" id="lbcap"></div></div>
+
+<script>
+// ---- video version tabs ----
+(function(){
+  var v=document.getElementById('film-video'), s=document.getElementById('film-src');
+  document.getElementById('vtabs').addEventListener('click',function(e){
+    var b=e.target.closest('.vtab'); if(!b) return;
+    document.querySelectorAll('.vtab').forEach(function(x){x.classList.remove('on')});
+    b.classList.add('on');
+    var t=v.currentTime||0; s.src=b.dataset.src; v.load();
+    v.addEventListener('loadeddata',function once(){ try{v.currentTime=Math.min(t,44);}catch(_){}} ,{once:true});
+    v.play().catch(function(){});
+  });
+})();
+
+// ---- storyboard data ----
+var PANELS=[
+ [1,"0:00–0:04","The Dark Beacon","Drone push-in","Aerial establishing","The village over a sea of cloud; every lantern glows but one distant dark beacon."],
+ [2,"0:04–0:08","Miko Notices the Ember","Slider right","Medium-wide","Kai searches his open backpack; the ember glows inside. Miko watches from the rail."],
+ [3,"0:08–0:11","The Snatch","Low tracking","Medium","Miko grabs the ember and bolts screen-right; Kai turns, caught off guard."],
+ [4,"0:11–0:15","Kai Gives Chase","Follow shot","Medium-wide","Kai runs the rooftops after Miko; the bridge and dark beacon lie ahead."],
+ [5,"0:15–0:19","Across the Bridge","Side tracking","Medium-wide","Miko races the suspended bridge toward the beacon platform, ember in mouth."],
+ [6,"0:19–0:23","Miko Finds the Problem","Static","Medium","Miko paws at the dead mechanism; the ember rests beside him. The problem, made clear."],
+ [7,"0:23–0:27","Kai Understands","Slow dolly-in","Medium","Kai arrives frustrated — then sees the dark lantern and understands."],
+ [8,"0:27–0:30","A Team","Arc right","Two-shot","Kai kneels beside Miko and takes the ember. Opposition becomes teamwork."],
+ [9,"0:30–0:34","The Ember Goes In","Locked","Close insert","Kai seats the ember in the slot; warm light blooms but the crank resists."],
+ [10,"0:34–0:38","Miko Releases the Latch","Low slider","Low insert","Miko slips beneath the housing and frees the hidden latch with a paw."],
+ [11,"0:38–0:42","The Village Relights","Crane up","Wide reveal","The beacon ignites; warm light spreads tower to tower across the village."],
+ [12,"0:42–0:45","Quiet Ending","Dolly out","Medium-wide","Kai sits; Miko leans against him. The village glows behind them."]
+];
+(function(){
+  var g=document.getElementById('sbgrid'), html="";
+  PANELS.forEach(function(p){
+    var n=String(p[0]).padStart(2,'0');
+    html+='<figure class="panel" data-full="assets/img/kf'+n+'.jpg" data-cap="'+n+' · '+p[2]+' — '+p[1]+'">'
+      +'<div class="thumb"><img loading="lazy" src="assets/img/kf'+n+'_thumb.jpg" alt="Panel '+n+'"><span class="pn">'+n+'</span><span class="tc">'+p[1]+'</span></div>'
+      +'<div class="px"><h4>'+p[2]+'</h4><div class="meta"><span class="tag cam">'+p[3]+'</span><span class="tag">'+p[4]+'</span></div><p>'+p[5]+'</p></div></figure>';
+  });
+  g.innerHTML=html;
+})();
+
+// ---- lightbox ----
+(function(){
+  var lb=document.getElementById('lb'),img=document.getElementById('lbimg'),cap=document.getElementById('lbcap');
+  document.getElementById('sbgrid').addEventListener('click',function(e){
+    var p=e.target.closest('.panel'); if(!p) return;
+    img.src=p.dataset.full; cap.textContent=p.dataset.cap; lb.classList.add('on');
+  });
+  function close(){lb.classList.remove('on');img.src='';}
+  document.getElementById('lbx').addEventListener('click',close);
+  lb.addEventListener('click',function(e){if(e.target===lb)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+
+// ---- prompt archive ----
+var PROMPTS=[
+ ["Environment sheet — Cloud-Top Village","gpt_image_2 · 2K · 16:9 · text-only",
+"A single polished 16:9 production ENVIRONMENT MODEL SHEET in the style of a hand-painted 2D animated feature film: clean expressive linework, restrained cel shading, softly painted watercolor-paper texture, warm ivory paper background, fine hand-drawn borders, rounded section labels.\n\nTitle: 'ENVIRONMENT SHEET — CLOUD-TOP VILLAGE'. One consistent wind-swept alpine village of steep blue-grey slate roofs, half-timbered facades, copper-and-glass lantern towers, suspended timber bridges, above a sea of cloud at blue hour.\n\nSix labeled views: 1 AERIAL ESTABLISHING (all lanterns glow except one distant DARK beacon upper-right) · 2 ROOF-LEVEL LANE · 3 SUSPENDED BRIDGE · 4 BEACON PLATFORM (circular, crank, hatch, unlit glass chamber) · 5 SKYLINE PAYOFF · 6 ROUTE & LANDMARK PLAN (left-to-right). Material studies: slate, aged timber, weathered copper, lantern glass. Six swatches: slate blue, fog gray, weathered wood, muted sage, copper, amber light.\n\nCool blue-grey and sage dominate; amber is a selective accent. NO characters, people or animals. No logos, watermarks, UI."],
+ ["Object sheet — The Last Lantern","gpt_image_2 · 2K · 16:9 · text-only",
+"A single 16:9 production OBJECT MODEL SHEET, same hand-painted animated style, warm ivory paper.\n\nTitle: 'OBJECT SHEET — THE LAST LANTERN'. One consistent beacon-lantern mechanism of weathered copper, brass, timber and glass.\n\nSection 1 turnaround: FRONT-CLOSED · SIDE-CRANK (crank on right) · 3/4 HATCH-OPEN (keyed ember slot, gears, latch) · BACK & UNDERSIDE (hidden release latch). Section 2 states: UNPOWERED · EMBER INSERTED (amber leak, still dark, latch jammed) · LATCH RELEASED · FULLY IGNITED. Section 3 components: ember capsule (keyed end), capsule slot, hand crank, hidden release latch. Section 4 POWER FLOW diagram. Six material swatches.\n\nSilhouette clarity, repeatability, readable mechanical causality. NO characters. No magic, sci-fi, flames, logos."],
+ ["Keyframe — shared style prefix","gpt_image_2 · 2K · 16:9 · +refs @Image1–4",
+"Hand-painted 2D animated feature-film keyframe still, Studio Ghibli / storybook anime look: clean expressive linework, restrained cel shading, soft watercolor-paper texture, cinematic multiplane depth. 16:9. Cloud-top rooftop village at blue hour matching the environment reference; cool slate-blue and sage palette with warm amber accents. Match the character and prop references EXACTLY, no redesign.\n\nKai: cheerful ~10yo boy, spiky red-orange hair, amber-brown eyes, white tee, muted sage scarf, khaki cargo shorts, orange hi-top sneakers, burnt-orange backpack. Miko: small four-legged fox, orange fur, cream muzzle and chest, cream-tipped fluffy tail, dark paws and ear tips, large amber eyes, oversized ears; natural fox anatomy, never bipedal, no hands. Ember capsule: keyed copper-and-brass cylinder with a frosted amber glowing core.\n\n[+ per-panel action, framing, camera-move, and lighting-state insert] — one clear composition, no text, no captions, no borders, no logos."],
+ ["Seedance A — The Theft","seedance_2_0 · 15s · 1080p · genre epic",
+"[VIDEO TYPE: Cinematic epic, hand-painted 2D animated feature film. 15-second sequence, 4 hard cuts.]\n[CAMERA:\n00:00-00:04 wide aerial, slow drone push-in over the cloud-top village toward one distant DARK beacon while all other lanterns glow. Hard cut.\n00:04-00:08 roof platform, controlled slider RIGHT; Kai kneels at his open backpack, ember glowing inside; Miko on the rail watches. Hard cut.\n00:08-00:11 low fox-height tracking; Miko snatches the ember and bolts screen-RIGHT; Kai turns in surprise. Match-on-motion cut.\n00:11-00:15 follow behind Kai running screen-RIGHT chasing Miko toward the dark beacon; motion alive to the last frame.]\n[SUBJECT: Kai (red-orange hair, sage scarf, orange backpack) · Miko (orange fox, cream markings, big cream-tipped tail) carrying a glowing copper ember. Both exactly on-model; Miko a natural quadruped.]\n[SFX: open-air wind, distant bells, buckle clicks, fox paws on slate, shoes on tiles, faint ember clink; escalating. No music.]"],
+ ["Seedance B — The Revelation","seedance_2_0 · 15s · 1080p · genre epic",
+"[VIDEO TYPE: Cinematic epic, hand-painted 2D animated feature film. 15-second sequence, 4 hard cuts.]\n[CAMERA:\n00:00-00:04 stable side-tracking with Miko running side-profile screen-RIGHT across the suspended bridge, ember in mouth, unlit beacon ahead. Hard cut.\n00:04-00:08 static medium; Miko reaches the DEAD beacon and paws urgently at the copper mechanism, dark glass chamber above, ember beside him. Hard cut.\n00:08-00:12 slow dolly-in on Kai arriving from LEFT, expression shifting from frustration to understanding; Miko at the mechanism. Hard cut.\n00:12-00:15 subtle arc RIGHT as Kai kneels beside Miko and takes the ember, both oriented to the open mechanism, dark chamber overhead.]\n[SUBJECT: Kai · Miko on-model; beacon a weathered copper-and-glass mechanism, dark and unlit.]\n[SFX: bridge rope creaks, fox paws on wood, wind through cables, claws on copper, slowing footsteps, soft breath, faint ember hum. No music.]"],
+ ["Seedance C — The Light","seedance_2_0 · 15s · 1080p · genre epic",
+"[VIDEO TYPE: Cinematic epic, hand-painted 2D animated feature film. 15-second sequence, 4 hard cuts.]\n[CAMERA:\n00:00-00:04 locked close insert; Kai's hands insert the glowing keyed ember into the open copper mechanism, warm light begins to bloom, crank still resists. Hard cut.\n00:04-00:08 low slider LEFT under the housing; Miko nudges a hidden copper release latch free with his paw; the latch snaps loose. Hard cut.\n00:08-00:12 crane UP as the beacon ignites above Kai and Miko and warm amber light spreads tower to tower across the foggy village. Hard cut.\n00:12-00:15 gentle dolly-OUT; Kai sits beside the repaired beacon with Miko leaning against him, both watching the glowing village; scarf and tail drift.]\n[SUBJECT: Kai · Miko on-model; beacon dark→warm amber.]\n[SFX: ember click, copper contact, mechanical strain, latch release, ignition bloom, glass resonance, distant chain of lanterns, soft wind, calm room tone. No music.]"],
+ ["Narrator voiceover — full script","seed_audio TTS · voice: warm storyteller",
+"0:00  Every night, the village lights itself.\n0:04  But one tower had gone dark.\n0:15  The fox knew what the boy did not.\n0:22  Not a thief — a keeper of the light.\n0:31  Small hands. Small paws. One flame.\n0:40  The village remembered its glow — and the two friends, each other."]
+];
+(function(){
+  var host=document.getElementById('prompts-list'), html="";
+  PROMPTS.forEach(function(p,i){
+    html+='<details class="prompt"'+(i===0?' open':'')+'>'
+      +'<summary><span class="caret">▸</span>'+p[0]+'<span class="tw">'+p[1]+'</span></summary>'
+      +'<div class="pbody"><button class="copy" data-i="'+i+'">Copy</button><pre id="pr'+i+'">'+p[2].replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div></details>';
+  });
+  host.innerHTML=html;
+  host.addEventListener('click',function(e){
+    var b=e.target.closest('.copy'); if(!b) return;
+    var txt=PROMPTS[+b.dataset.i][2];
+    navigator.clipboard.writeText(txt).then(function(){
+      b.textContent='Copied'; b.classList.add('done');
+      setTimeout(function(){b.textContent='Copy';b.classList.remove('done');},1400);
+    });
+  });
+})();
+</script>
+</body>
+</html>
